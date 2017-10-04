@@ -1,0 +1,24 @@
+sudo: false
+language: python
+python:
+  - "2.7"
+
+services:
+  - docker
+
+install:
+  - pip install tox
+
+env:
+  - TOX_ENV=3.3.5
+  - TOX_ENV=3.4.4
+  - TOX_ENV=3.5.7
+  - TOX_ENV=3.6.6
+  - TOX_ENV=3.6.12
+
+  global:
+    - secure: "...fill in..." # DOCKER_USER
+    - secure: "...fill in..." # DOCKER_PASS
+
+script:
+  - tox -e $TOX_ENV
