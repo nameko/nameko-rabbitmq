@@ -24,8 +24,13 @@ build:
 login:
 	@docker login -u "$(DOCKER_USER)" -p "$(DOCKER_PASS)"
 
-tag: login
+ifeq ($(shell git rev-parse --abbrev-ref HEAD), master)
+push: login
 	docker push nameko/nameko-rabbitmq:$(RABBITMQ_VERSION)
+else
+push:
+	@echo "skipping push, not master branch"
+endif
 
 run:
 	docker run -it --rm -v nameko-rabbitmq-certs:/mnt/certs -p 15672:15672 -p 5672:5672 -p 5671:5671 --name nameko-rabbitmq nameko/nameko-rabbitmq:$(RABBITMQ_VERSION)
