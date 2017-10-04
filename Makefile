@@ -24,7 +24,7 @@ build:
 login:
 	@docker login -u "$(DOCKER_USER)" -p "$(DOCKER_PASS)"
 
-ifeq ($(shell git rev-parse --abbrev-ref HEAD), master)
+ifeq ($(TRAVIS_BRANCH), master)
 push: login
 	docker push nameko/nameko-rabbitmq:$(RABBITMQ_VERSION)
 else
