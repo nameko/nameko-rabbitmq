@@ -114,4 +114,5 @@ COPY rabbitmq.config /etc/rabbitmq/rabbitmq.config
 COPY ssl /srv/ssl
 
 # enable rabbit management API
+EXPOSE 15672
 RUN rabbitmq-plugins enable rabbitmq_management
