@@ -1,25 +1,19 @@
 RABBITMQ_VERSION ?= 3.6.6
+ALPINE ?= -alpine
 
 minor_version = $(word 2, $(subst ., ,$(RABBITMQ_VERSION)))
 build_version = $(word 3, $(subst ., ,$(RABBITMQ_VERSION)))
 
-new_gpg_key = "0A9AF2115F4687BD29803A206B73A36E6026DFCA"
-old_gpg_key = "F78372A06FF50C80464FC1B4F7B8CEA6056E8E56"
-
 ifeq ($(shell test $(minor_version) -lt 6; echo $$?),0)
-	TAR_EXT="gz"
-	GPG_KEY=$(old_gpg_key)
+	ALPINE=
 else
-	TAR_EXT="xz"
-	ifeq ($(shell test $(build_version) -lt 3; echo $$?),0)
-		GPG_KEY=$(old_gpg_key)
-	else
-		GPG_KEY=$(new_gpg_key)
+	ifeq ($(shell test $(build_version) -lt 6; echo $$?),0)
+		ALPINE=
 	endif
 endif
 
 build:
-	docker build -t nameko/nameko-rabbitmq:$(RABBITMQ_VERSION) -f Dockerfile --build-arg RABBITMQ_VERSION=$(RABBITMQ_VERSION) --build-arg GPG_KEY=$(GPG_KEY) --build-arg TAR_EXT=$(TAR_EXT) .;
+	docker build -t nameko/nameko-rabbitmq:$(RABBITMQ_VERSION) -f Dockerfile --build-arg TAG=$(RABBITMQ_VERSION)-management$(ALPINE) .;
 
 login:
 	@docker login -u "$(DOCKER_USER)" -p "$(DOCKER_PASS)"
