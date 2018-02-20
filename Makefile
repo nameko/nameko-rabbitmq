@@ -12,6 +12,16 @@ else
 	endif
 endif
 
+certs:
+	cd certgen; ./generate.sh
+	cp certgen/testca/cacert.pem ssl/cacert.pem
+	cp certgen/testca/private/cakey.pem ssl/cakey.pem
+	cp certgen/server/cert.pem ssl/servercert.pem
+	cp certgen/server/key.pem ssl/serverkey.pem
+	cp certgen/client/cert.pem ssl/clientcert.pem
+	cp certgen/client/key.pem ssl/clientkey.pem
+	cd certgen; ./clean.sh
+
 build:
 	docker build -t nameko/nameko-rabbitmq:$(RABBITMQ_VERSION) -f Dockerfile --build-arg TAG=$(RABBITMQ_VERSION)-management$(ALPINE) .;
 
