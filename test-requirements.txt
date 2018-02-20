@@ -1,0 +1,2 @@
+kombu
+pytest
