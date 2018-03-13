@@ -18,7 +18,7 @@ def test_connection():
     conn.release()
 
 
-def test_secure_connection(certsdir):
+def test_secure_connection(certs_dir):
     conn = Connection('amqp://guest:guest@localhost:5671/', ssl={
         'ca_certs': f'{certs_dir}/cacert.pem',
         'keyfile': f'{certs_dir}/clientkey.pem',
