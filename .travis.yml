@@ -1,8 +1,12 @@
 sudo: false
+language: python
 
 before_install:
   - sudo apt-get update
   - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
+
+install:
+  - pip install -r test-requirements.txt
 
 services:
   - docker
