@@ -43,6 +43,7 @@ env:
 
 script:
   - make build
+  - make test
 
 deploy:
   provider: script

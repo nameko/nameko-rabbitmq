@@ -2,6 +2,7 @@ __pycache__
 .docker
 .tox
 certgen/*
+certs
 !certgen/generate.sh
 !certgen/openssl.cnf
 

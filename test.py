@@ -14,9 +14,9 @@ def test_connection():
 
 def test_secure_connection():
     conn = Connection('amqp://guest:guest@localhost:5671/', ssl={
-        'ca_certs': 'ssl/cacert.pem',
-        'keyfile': 'ssl/clientkey.pem',
-        'certfile': 'ssl/clientcert.pem',
+        'ca_certs': 'certs/cacert.pem',
+        'keyfile': 'certs/clientkey.pem',
+        'certfile': 'certs/clientcert.pem',
         'cert_reqs': ssl.CERT_REQUIRED,
     })
     conn.connect()

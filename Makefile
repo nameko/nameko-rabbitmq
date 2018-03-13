@@ -36,8 +36,21 @@ push:
 	@echo "skipping push, not master branch"
 endif
 
-run:
-	docker run -it --rm -v nameko-rabbitmq-certs:/mnt/certs -p 15672:15672 -p 5672:5672 -p 5671:5671 --name nameko-rabbitmq nameko/nameko-rabbitmq:$(RABBITMQ_VERSION)
+run: clean
+	docker run -d --rm -v $(shell pwd)/certs:/mnt/certs -p 15672:15672 -p 5672:5672 -p 5671:5671 --name nameko-rabbitmq nameko/nameko-rabbitmq:$(RABBITMQ_VERSION)
+	@printf "Waiting for container to be ready"
+	@booting=1; \
+	while [ $${booting} -ne 0 ] ; do \
+		curl -s http://localhost:15672/api/overview > /dev/null; \
+		booting=$$?; \
+		sleep 2; \
+		printf "."; \
+	done; \
+	printf "\n"
 
-test:
+clean:
+	docker stop nameko-rabbitmq || true
+	rm -r certs || true
+
+test: run
 	py.test test.py
