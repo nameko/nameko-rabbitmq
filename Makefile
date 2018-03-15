@@ -37,7 +37,8 @@ push:
 endif
 
 run: clean
-	docker run -d --rm -v $(shell pwd)/certs:/mnt/certs -p 15672:15672 -p 5672:5672 -p 5671:5671 --name nameko-rabbitmq nameko/nameko-rabbitmq:$(RABBITMQ_VERSION)
+	docker run -d --rm -p 15672:15672 -p 5672:5672 -p 5671:5671 --name nameko-rabbitmq nameko/nameko-rabbitmq:$(RABBITMQ_VERSION)
+	docker cp nameko-rabbitmq:/srv/ssl certs
 	@printf "Waiting for container to be ready"
 	@booting=1; \
 	while [ $${booting} -ne 0 ] ; do \
