@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import ssl
-from os.path import abspath, dirname
+from os.path import abspath, dirname, join
 
 from kombu.connection import Connection
 import pytest
@@ -8,7 +8,7 @@ import pytest
 
 @pytest.fixture
 def certs_dir():
-    return dirname(abspath(__file__))
+    return join(dirname(abspath(__file__)), "certs")
 
 
 def test_connection():
@@ -20,9 +20,9 @@ def test_connection():
 
 def test_secure_connection(certs_dir):
     conn = Connection('amqp://guest:guest@localhost:5671/', ssl={
-        'ca_certs': f'{certs_dir}/cacert.pem',
-        'keyfile': f'{certs_dir}/clientkey.pem',
-        'certfile': f'{certs_dir}/clientcert.pem',
+        'ca_certs': join(certs_dir, 'cacert.pem'),
+        'keyfile': join(certs_dir, 'clientkey.pem'),
+        'certfile': join(certs_dir, 'clientcert.pem'),
         'cert_reqs': ssl.CERT_REQUIRED,
     })
     conn.connect()
