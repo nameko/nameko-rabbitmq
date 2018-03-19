@@ -28,3 +28,10 @@ def test_secure_connection(certs_dir):
     conn.connect()
     assert conn.connected
     conn.release()
+
+
+def test_secure_connection_without_cert_verification(certs_dir):
+    conn = Connection('amqp://guest:guest@localhost:5671/', ssl=True)
+    conn.connect()
+    assert conn.connected
+    conn.release()
