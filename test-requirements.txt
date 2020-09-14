@@ -1,2 +1,2 @@
-kombu
+kombu<5
 pytest
