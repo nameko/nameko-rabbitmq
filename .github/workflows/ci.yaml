@@ -71,4 +71,4 @@ jobs:
     - name: deploy
       run: |
         echo "deploying!"
-      if: github.ref == "refs/heads/master"
+      if: github.ref == 'refs/heads/master'
