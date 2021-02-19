@@ -67,6 +67,8 @@ jobs:
     - name: test
       run: |
         make test
+      env:
+        RABBITMQ_VERSION: ${{ matrix.rabbitmq-version }}
 
     - name: deploy
       run: |
