@@ -70,5 +70,8 @@ jobs:
 
     - name: deploy
       run: |
-        echo "deploying!"
+        docker tag nameko/nameko-rabbitmq:$(RABBITMQ_VERSION) docker.pkg.github.com/nameko/nameko-rabbitmq/nameko-rabbitmq:$(RABBITMQ_VERSION)
+        docker push docker.pkg.github.com/nameko/nameko-rabbitmq/nameko-rabbitmq:$(RABBITMQ_VERSION)
+      env:
+        RABBITMQ_VERSION: ${{ matrix.rabbitmq-version }}
       # if: github.ref == 'refs/heads/master'
