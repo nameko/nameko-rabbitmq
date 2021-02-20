@@ -75,4 +75,4 @@ jobs:
         docker login ghcr.io -u nameko-actions-bot -p ${{ secrets.ACTIONS_BOT_PAT }}
         docker tag nameko/nameko-rabbitmq:${{ matrix.rabbitmq-version }} ghcr.io/nameko/nameko-rabbitmq:${{ matrix.rabbitmq-version }}
         docker push ghcr.io/nameko/nameko-rabbitmq:${{ matrix.rabbitmq-version }}
-      # if: github.ref == 'refs/heads/master'
+      if: github.ref == 'refs/heads/master'
