@@ -25,17 +25,6 @@ certs:
 build:
 	docker build -t nameko/nameko-rabbitmq:$(RABBITMQ_VERSION) -f Dockerfile --build-arg TAG=$(RABBITMQ_VERSION)-management$(ALPINE) .;
 
-login:
-	@docker login -u "$(DOCKER_USER)" -p "$(DOCKER_PASS)"
-
-ifeq ($(TRAVIS_BRANCH), master)
-push: login
-	docker push nameko/nameko-rabbitmq:$(RABBITMQ_VERSION)
-else
-push:
-	@echo "skipping push, not master branch"
-endif
-
 run: clean
 	docker run -d --rm -p 15672:15672 -p 5672:5672 -p 5671:5671 --name nameko-rabbitmq nameko/nameko-rabbitmq:$(RABBITMQ_VERSION)
 	docker cp nameko-rabbitmq:/srv/ssl certs
