@@ -72,7 +72,7 @@ jobs:
 
     - name: deploy
       run: |
-        docker login https://docker.pkg.github.com -u nameko -p ${{ github.token }}
-        docker tag nameko/nameko-rabbitmq:${{ matrix.rabbitmq-version }} docker.pkg.github.com/nameko/nameko-rabbitmq/nameko-rabbitmq:${{ matrix.rabbitmq-version }}
-        docker push docker.pkg.github.com/nameko/nameko-rabbitmq/nameko-rabbitmq:${{ matrix.rabbitmq-version }}
+        docker login ghcr.io -u nameko-actions-bot -p ${{ secrets.ACTIONS_BOT_PAT }}
+        docker tag nameko/nameko-rabbitmq:${{ matrix.rabbitmq-version }} ghcr.io/nameko/nameko-rabbitmq:${{ matrix.rabbitmq-version }}
+        docker push ghcr.io/nameko/nameko-rabbitmq:${{ matrix.rabbitmq-version }}
       # if: github.ref == 'refs/heads/master'
