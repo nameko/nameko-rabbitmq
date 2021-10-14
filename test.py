@@ -35,3 +35,19 @@ def test_secure_connection_without_cert_verification(certs_dir):
     conn.connect()
     assert conn.connected
     conn.release()
+
+
+def test_external_login_method(certs_dir):
+    conn = Connection(
+        'amqp://localhost:5671/',
+        login_method="EXTERNAL",
+        ssl={
+            'ca_certs': join(certs_dir, 'cacert.pem'),
+            'keyfile': join(certs_dir, 'clientkey.pem'),
+            'certfile': join(certs_dir, 'clientcert.pem'),
+            'cert_reqs': ssl.CERT_REQUIRED,
+        },
+    )
+    conn.connect()
+    assert conn.connected
+    conn.release()
